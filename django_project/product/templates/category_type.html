@@ -1,0 +1,27 @@
+{% extends 'base.html' %}{% block content %}
+
+<div class="row">
+    {% for i in Products %}{% if i.product_category.city_id == category_types %}
+    <div class="col-lg-4 col-md-6 mt-4">
+        <div class="card h-100">
+            <a href="#">
+                <img class="card-img-top" src={{i.product_image.url}} alt="">
+            </a>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <!-- <a href="#">{{i.product_name}}</a> -->
+                    <a href="#">{{i.ID}}</a>
+                </h4>
+                <h5>฿{{ i.product_price }}</h5>
+                <p class="card-text">{{i.product_description}}</p>
+            </div>
+            <div class="card-footer text-right">
+
+                <button type="button" class="btn btn-light" style="background-color: #c48fc2 !important">Cart</button>
+            </div>
+
+        </div>
+    </div>
+    {% endif %} {% endfor %}
+</div>
+{% endblock %}

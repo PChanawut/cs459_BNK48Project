@@ -1,0 +1,24 @@
+{% extends 'base.html' %}{%block content%}
+<!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false"> -->
+<!-- <div class="modal-dialog modal-dialog-centered" role="document"> -->
+<div class="modal-content mt-3">
+    <div class="modal-header" style="background-color: #c48fc2be !important">
+        <h5 class="modal-title" id="exampleModalLongTitle" style="color:white;">Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form method="POST">
+        <div class="modal-body" style="background-color: #fef1f3 !important">
+            <div class="form-label-group">{% csrf_token %} {{ form.username}}{{ form.password }}
+            </div>
+        </div>
+        <div class="modal-footer" style="background-color: #fef1f3 !important">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-light" style=" color:white; background-color: #c48fc2 !important">Submit</button>
+        </div>
+    </form>
+</div>
+<!-- </div> -->
+<!-- </div> -->
+{% endblock %}
