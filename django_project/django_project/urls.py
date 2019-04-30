@@ -21,15 +21,12 @@ from django.urls import path, include
 # from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
-# urlpatterns += staticfiles_urlpatterns()
-# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+from product import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('product/', include('product.urls')),
     path('product/<int:category_type>', include('product.urls')),
-    path('login/',
-         auth_views.LoginView.as_view(template_name='login.html'),
-         name='login'),
+    path('login/', views.login_auth, name='login'),
     path('logout/',
          auth_views.LogoutView.as_view(template_name='logout.html'),
          name='logout'),

@@ -68,5 +68,31 @@ def product_type(request, category_type):
     return render(request, 'category_type.html', context)
 
 
-def login(request):
-    return render(request, 'login.html')
+def login_auth(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        context = {
+            'form': LoginForm(),
+            'Categorys': Category.objects.all(),
+            'Products': Product.objects.all()
+        }
+        return render(request, 'category_product.html', context)
+    else:
+        context = {
+            'form': LoginForm(),
+            'Categorys': Category.objects.all(),
+            'Products': Product.objects.all()
+        }
+        return render(request, 'base_js.html', context)
+        # Return an 'invalid login' error message.
+        ...
+    # context = {
+    #     'form': LoginForm(),
+    #     'category_types': category_type,
+    #     'Categorys': Category.objects.all(),
+    #     'Products': Product.objects.all()
+    # }
+    # return render(request, 'login.html', context)

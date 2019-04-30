@@ -1,0 +1,9 @@
+{% extends 'category_product.html' %} {%block custom_js %}
+<script type="text/javascript">
+    $(function () {
+        $('#exampleModalCenter').modal('show');
+        $('#login_message').html(`
+            <p class="text-center mt-2" style="color:red"><strong>Username or Password is incorrect.</strong></p>
+        `);
+    });
+</script> {%endblock%}

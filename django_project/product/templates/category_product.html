@@ -26,7 +26,29 @@
     </a>
 </div>
 <div class="row">
-    {% for i in Products %}
+    {% for i in Products %} {% if i.product_quatity == 0 %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
+            <a href="#">
+                <img class="card-img-top" src={{i.product_image.url}} alt="">
+            </a>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a href="#">{{i.product_name}}</a>
+                </h4>
+                <h5>฿{{ i.product_price }}</h5>
+                <p class="card-text">{{i.product_description}}</p>
+                <p class="text-left" style="color:red" style="display: inline-block">
+                    <strong>Out of stock.</strong>
+                </p>
+            </div>
+            <div class="card-footer text-right">
+                <button type="button" class="btn btn-light" style="background-color:gray !important" disabled>Cart</button>
+            </div>
+
+        </div>
+    </div>
+    {% else %}
     <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100">
             <a href="#">
@@ -46,6 +68,6 @@
 
         </div>
     </div>
-    {% endfor %}
+    {% endif %} {% endfor %}
 </div>
 {% endblock %}
