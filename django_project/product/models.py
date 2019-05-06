@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
-
+from django.utils.timezone import now
 
 class Category(models.Model):
     city_id = models.AutoField(primary_key=True)
@@ -29,3 +29,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
+
+class bill(models.Model):
+    bill_id = models.AutoField(primary_key=True)
+    bill_date = models.DateTimeField(default=now, blank=True)
+    bill_userbuy = models.ForeignKey(User, on_delete=models.CASCADE)
+    bill_product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    bill_quatity = models.IntegerField(default=1)   
