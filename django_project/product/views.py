@@ -8,6 +8,8 @@ from .forms import LoginForm
 from .cart import CartItem
 import json #change qurry set to json
 import pickle
+from django.core import serializers
+
 # from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
@@ -85,28 +87,35 @@ def login_auth(request):
 
 def add_product(request):
     p_id = request.POST['product_id']
-    product_qurry = Product.objects.filter(id = p_id).values()
-    # product_qurry = product_qurry[0]
-    product_json = json.dumps(list(product_qurry))
-    print('\n\n\n\n\n')
-    print(product_qurry.product_category_id)
-    # print(product_qurry)
-    # print(json.dumps(list(product_qurry)) )
-    # print(product_qurry)
-    # print('\n\n\n\n\n')
-    # print(product_json)
+    product_qurry = Product.objects.filter(id = p_id)[0]
+    product_json = {
+        'id' : product_qurry.id,
+        'name' : product_qurry.product_name,
+        'price' : product_qurry.product_price,
+        'quantity' : 1
+    }
     cartItem = CartItem(p_id, 1)
     if 'cart' in request.session:
         cart_session = request.session['cart']
-        # for cart in cart_session :
-        #     if product_id == cart.product_id :
-
+        hasProduct = False
+        newTotalPrice = 0
+        for cart in cart_session['cartItem'] :
+            if product_qurry.id == cart['id'] :
+                hasProduct = True
+                cart['quantity'] = cart['quantity'] + 1
+            newTotalPrice += cart['quantity']*cart['price']
+        if not hasProduct :
+            cart_session['cartItem'].append(product_json)
+            newTotalPrice += product_json['quantity']*product_json['price']
+        cart_session['allPrice'] = newTotalPrice 
+        request.session['cart'] = cart_session
     else:
+        cart_arr = []
+        cart_arr.append(product_json)
+        # request.session['cart'] = cart_arr
         request.session['cart'] = {
-            'carts' : product_json
+            'allPrice':product_json["price"],
+            'cartItem':cart_arr
         }
-    # print()
-    # pickle.dumps(product_qurry.query)
-    # json.loads(product_json)
-        # request.session['cart'] = product_qurry
+ 
     return redirect('/product') 

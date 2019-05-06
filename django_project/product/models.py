@@ -32,7 +32,9 @@ class Product(models.Model):
 
 class bill(models.Model):
     bill_id = models.AutoField(primary_key=True)
-    bill_date = models.DateTimeField(default=now, blank=True)
     bill_userbuy = models.ForeignKey(User, on_delete=models.CASCADE)
-    bill_product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    bill_quatity = models.IntegerField(default=1)   
+    bill_date = models.DateTimeField(default=now, blank=True)
+class billItem(models.Model):
+    billItem_bill = models.ForeignKey(bill, on_delete=models.CASCADE)
+    billItem_product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    billItem_quatity = models.IntegerField(default=1)   
