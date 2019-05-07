@@ -66,7 +66,7 @@
                 <form method="POST" action='{% url "add_product"%}'>
                     {% csrf_token %}
                     <input id="product_id" name="product_id" type="hidden" value="{{i.id}}">
-                    <button type="submit" class="btn btn-light" style="background-color: #c48fc2 !important">Cart</button>
+                    <button type="submit" class="btn btn-light" style="color:white; background-color: #c48fc2 !important">Cart</button>
                 </form>
             </div>
 

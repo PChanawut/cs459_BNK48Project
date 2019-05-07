@@ -31,6 +31,7 @@ urlpatterns = [
          auth_views.LogoutView.as_view(template_name='logout.html'),
          name='logout'),
     path('add_product/', views.add_product, name='add_product'),
+    path('delete_product/', views.delete_product, name='delete_product'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # urlpatterns +=

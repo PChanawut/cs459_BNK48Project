@@ -93,7 +93,6 @@
 
         </div>
     </div>  
-    modalPoll-1
     <!-- Large modal -->
 
 
@@ -107,26 +106,85 @@
                     </button>
             </div>
                 <!-- <form method="POST" action='#'> -->
-                    <div class="modal-body" style="background-color: #fef1f3 !important">
-                        <div class="form-label-group">
-                            {% csrf_token %} {{ form.username }}{{ form.password }}
-                        </div>
-                        <div id="login_message">
-                        </div>
-                    </div>
+                        <ul class="list-group" >
+                            <li class="list-group-item" style="background-color: #fef1f3 !important">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            Name
+                                        </div>
+                                        <div class="col-sm">
+                                            Price
+                                        </div>
+                                        <div class="col-sm">
+                                            Quantity
+                                            </div>
+                                        <div class="col-sm">
+                                            AllPrice
+                                        </div>
+                                        <div class="col-sm">
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {%for i in request.session.cart.cartItem %}
+                            <li class="list-group-item" style="background-color: #fef1f3 !important">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            {{i.name}}
+                                        </div>
+                                        <div class="col-sm">
+                                            {{i.price}}
+                                        </div>
+                                        <div class="col-sm">
+                                            {{i.quantity}}
+                                            </div>
+                                        <div class="col-sm">
+                                            {% widthratio i.price 1 i.quantity %}
+                                        </div>
+                                        <div class="col-sm">
+                                            <form method="POST" action='{% url "delete_product"%}'>
+                                                    {% csrf_token %}
+                                                    <input id="product_id" name="product_id" type="hidden" value="{{i.id}}">
+                                                    <button type="submit" class="btn btn-light" style="color:white; background-color: #c48fc2 !important">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {%endfor%}
+                            <li class="list-group-item" style="background-color: #fef1f3 !important">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                        </div>
+                                        <div class="col-sm">
+                                        </div>
+                                        <div class="col-sm">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            Total Price:
+                                        </div>
+                                        <div class="col-sm">
+                                            {{request.session.cart.allPrice}}
+                                        </div>
+                                        <div class="col-sm">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     <div class="modal-footer" style="background-color: #fef1f3 !important">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-light" style=" color:white; background-color: #c48fc2 !important">BuyNow</button>
-                <!-- </form> -->
+                    </div>
             </div>
-        </div>
     </div>
     </div>
     <!-- Page Content -->
     <div class="container my-5">
-
         <div class="row">
-
             <div class="col-lg-3">
                 <!-- f9c5d0 category_type=i.city_id -->
                 <h1 class="my-4">Ratah Shop</h1>
@@ -137,13 +195,12 @@
                 {% endfor %}
             </div>
             <!-- /.col-lg-3 -->
-
             <div class="col-lg-9">
                     <br/>
                     <!-- {%for product in request.session.cart.carts%}
                     {{product}}
                     {%endfor%} > -->
-                    {{ request.session.cart }}
+                    <!-- {{ request.session.cart }} -->
                     <!-- {% for i in Categorys %}
                         {{i}}
                     {%endfor%} -->

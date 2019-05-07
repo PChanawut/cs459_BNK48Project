@@ -84,6 +84,19 @@ def login_auth(request):
             'Products': Product.objects.all()
         }
         return render(request, 'base_js.html', context)
+def delete_product(request):
+    p_id = request.POST['product_id']
+    carts = request.session['cart']
+    cart_arr = []
+    for cart in carts['cartItem']:
+        if  p_id == str(cart['id']):
+            carts['allPrice'] -= cart['quantity']*cart['price']
+        else:
+            cart_arr.append(cart)
+    carts['cartItem'] = cart_arr
+    request.session['cart'] = carts
+    return redirect('/product')   
+
 
 def add_product(request):
     p_id = request.POST['product_id']
@@ -117,5 +130,4 @@ def add_product(request):
             'allPrice':product_json["price"],
             'cartItem':cart_arr
         }
- 
     return redirect('/product') 
