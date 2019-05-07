@@ -47,11 +47,26 @@ def product(request):
         form = LoginForm(request.POST)
         login(LoginForm(request.POST))
     else:
-        context = {
-            'form': LoginForm(),
-            'Categorys': Category.objects.all(),
-            'Products': Product.objects.all()
-        }
+        if(request.method == 'GET' and 'afterDelete' in request.GET):
+            context = {
+                'form': LoginForm(),
+                'Categorys': Category.objects.all(),
+                'Products': Product.objects.all(),
+                'afterDelete':True
+            }
+        # if(request.GET['afterDelete']):
+        #     context = {
+        #         'form': LoginForm(),
+        #         'Categorys': Category.objects.all(),
+        #         'Products': Product.objects.all(),
+        #         'afterDelete':True
+        #     }
+        else:
+            context = {
+                'form': LoginForm(),
+                'Categorys': Category.objects.all(),
+                'Products': Product.objects.all()
+            }
     return render(request, 'category_product.html', context)
 
 
@@ -95,7 +110,9 @@ def delete_product(request):
             cart_arr.append(cart)
     carts['cartItem'] = cart_arr
     request.session['cart'] = carts
-    return redirect('/product')   
+
+    
+    return redirect('/product?afterDelete=True')
 
 
 def add_product(request):
